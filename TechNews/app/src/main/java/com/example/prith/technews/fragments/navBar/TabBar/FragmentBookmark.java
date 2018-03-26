@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.prith.technews.FirebaseConnection;
@@ -22,6 +23,7 @@ import com.example.prith.technews.Model.NewsModel;
 import com.example.prith.technews.R;
 import com.example.prith.technews.adapter.MyAdapter;
 import com.example.prith.technews.interfaces.DataListener;
+import com.facebook.Profile;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -40,7 +42,8 @@ public class FragmentBookmark extends Fragment implements SwipeRefreshLayout.OnR
     LinearLayout bookmarkLayout, saveNewsLayout, connectionErrorLayout;
     Button retryBtn;
     DatabaseReference databaseReference;
-
+    String fbId;
+    TextView bookmarkTextView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,6 +56,7 @@ public class FragmentBookmark extends Fragment implements SwipeRefreshLayout.OnR
         connectionErrorLayout = view.findViewById(R.id.connectionErrorLayout);
         retryBtn = view.findViewById(R.id.retryBtn);
         progressBar = view.findViewById(R.id.progressBar);
+        bookmarkTextView = view.findViewById(R.id.emptyBookmarkView);
 
         // Controlling visibility
         bookmarkLayout.setVisibility(View.GONE);
@@ -66,7 +70,7 @@ public class FragmentBookmark extends Fragment implements SwipeRefreshLayout.OnR
 
         // controlling swipeRefreshLayout
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
-        swipeRefreshLayout.setOnRefreshListener((SwipeRefreshLayout.OnRefreshListener) this);
+        swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeColors(
                 getResources().getColor(android.R.color.holo_blue_light),
                 getResources().getColor(android.R.color.holo_orange_light),
@@ -94,6 +98,7 @@ public class FragmentBookmark extends Fragment implements SwipeRefreshLayout.OnR
     public void onRefresh() {
         // calling function which checks the network status while swiping up most
         // which gets news data according to the network connection
+
         checkNetworkStatus(true, false);
     }
 
@@ -103,70 +108,66 @@ public class FragmentBookmark extends Fragment implements SwipeRefreshLayout.OnR
         // getting the network and connectivity of the mobile data and wifi
         ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo= cm.getActiveNetworkInfo();
-
-        if (networkInfo != null){
-            connectionErrorLayout.setVisibility(View.GONE);
-            if(isRetry){
-                progressBar.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.VISIBLE);
-                callFirebaseData();
-            }else {
-                if(isRefreshing){
-                    swipeRefreshLayout.setRefreshing(true);
+        try {
+            fbId = Profile.getCurrentProfile().getId();
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+        Log.i("check", "firebase data "+ fbId);
+        if(fbId == null) {
+            bookmarkLayout.setVisibility(View.VISIBLE);
+            bookmarkTextView.setText(getString(R.string.enableFeature));
+        }else {
+            if (networkInfo != null) {
+                connectionErrorLayout.setVisibility(View.GONE);
+                if (isRetry) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.VISIBLE);
                     callFirebaseData();
-                }else{
-                    List<NewsModel> checkModel = NewsModel.getBookmarkedNews();
-                    if(checkModel.size() > 0) {
-                        adapter = new MyAdapter(getContext(), checkModel);
-                        recyclerView.setAdapter(adapter);
-                        if(progressBar!=null){
-                            progressBar.setVisibility(View.GONE);
-                        }
-                        swipeRefreshLayout.setEnabled(true);
-                    }else {
+                } else {
+                    if (isRefreshing) {
+                        swipeRefreshLayout.setRefreshing(true);
                         callFirebaseData();
+                    } else {
+                        List<NewsModel> checkModel = NewsModel.getBookmarkedNews();
+                        if (checkModel.size() > 0) {
+                            adapter = new MyAdapter(getContext(), checkModel);
+                            recyclerView.setAdapter(adapter);
+                            if (progressBar != null) {
+                                progressBar.setVisibility(View.GONE);
+                            }
+                            swipeRefreshLayout.setEnabled(true);
+                        } else {
+                            callFirebaseData();
+                        }
                     }
                 }
+            } else {
+                connectionErrorLayout.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.GONE);
             }
-        }else {
-            connectionErrorLayout.setVisibility(View.VISIBLE);
-            progressBar.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.GONE);
         }
     }
 
     //method which fetches the data from the firebase database
     public void callFirebaseData(){
-        Log.i("check", "firebase data");
         FirebaseConnection firebaseConnection = new FirebaseConnection(progressBar,
                 getContext(), swipeRefreshLayout);
-        firebaseConnection.getBookmarkNews();
+        firebaseConnection.getBookmarkNews(fbId);
         firebaseConnection.setDataListener(new DataListener() {
             @Override
             public void onDataReceived(boolean flag) {
                 List<NewsModel> checkType = NewsModel.getBookmarkedNews();
-                adapter = new MyAdapter(getContext(), checkType);
-                recyclerView.setAdapter(adapter);
+//                if(checkType.size() == 0){
+//                    bookmarkLayout.setVisibility(View.VISIBLE);
+//                    bookmarkTextView.setText(getString(R.string.emptyBookmarkNews));
+//                }else {
+                    adapter = new MyAdapter(getContext(), checkType);
+                    recyclerView.setAdapter(adapter);
+//                }
             }
         });
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        try {
-            recyclerView.setAdapter(adapter);
-
-        }catch (NullPointerException e){
-            Log.i("exception", e+"");
-        }
-
-        Log.i("hello2", "hello2");
-
-
-    }
-
-    public void populateData(){
-        onResume();
-    }
 }

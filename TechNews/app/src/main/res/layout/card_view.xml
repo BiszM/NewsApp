@@ -64,46 +64,23 @@
                         android:paddingEnd="10dp"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:layout_weight="30"
+                        android:layout_weight="1"
                         android:lineSpacingMultiplier="1.1"
                         android:lineSpacingExtra="2dp"
                         tools:ignore="NestedWeights,RtlSymmetry" />
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/postedBy"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:gravity="center|bottom"
+                        android:textSize="14sp"
                         android:paddingStart="10dp"
-                        android:layout_weight="70"
-                        tools:ignore="RtlSymmetry"
-                        android:id="@+id/linearLayoutRightDown">
-
-                        <TextView
-                            android:id="@+id/postedBy"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textSize="14sp"
-                            android:paddingStart="0dp"
-                            android:paddingTop="10dp"
-                            android:layout_weight="1"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:fontFamily="@font/old_standard_tt"
-                            android:hint="@string/author_name"
-                            tools:ignore="NestedWeights,RtlSymmetry" />
-
-                        <ImageView
-                            android:id="@+id/actionMenuView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="#00ff0000"
-                            android:layout_weight="0"
-                            android:src="@mipmap/ic_plus_icon"
-                            android:layout_gravity="bottom|right"
-                            android:layout_margin="10dp"
-                            tools:ignore="RtlHardcoded"
-                            android:contentDescription="" />
-                    </LinearLayout>
+                        android:paddingTop="10dp"
+                        android:layout_weight="3"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:fontFamily="@font/old_standard_tt"
+                        android:hint="@string/author_name"
+                        tools:ignore="NestedWeights,RtlSymmetry" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

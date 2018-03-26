@@ -224,7 +224,6 @@ public class MainActivity extends AppCompatActivity
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

@@ -45,11 +45,4 @@ public class TabLayoutAdapter extends FragmentPagerAdapter {
         return null;
     }
 
-    public void populateData(){
-        try {
-            bookmark.populateData();
-        }catch (NullPointerException e){
-            Log.i("NullPointerException", e+"");
-        }
-    }
 }

@@ -40,14 +40,16 @@
                 android:orientation="vertical"
                 android:id="@+id/saveNewsLayout">
                 <TextView
+                    android:id="@+id/emptySaveView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="There are no saved news..."
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:text="@string/noSave"
                     android:textAlignment="center"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:paddingTop="20dp"
-                    android:paddingBottom="30dp"/>/>
+                    android:paddingBottom="30dp"/>
             </LinearLayout>
             <!--layout to show save message-->
             <LinearLayout
@@ -56,14 +58,16 @@
                 android:orientation="vertical"
                 android:id="@+id/bookmarkLayout">
                 <TextView
+                    android:id="@+id/emptyBookmarkView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="There are no bookmarked news..."
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:text="@string/noBookmark"
                     android:textAlignment="center"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:paddingTop="20dp"
-                    android:paddingBottom="30dp"/>/>
+                    android:paddingBottom="30dp"/>
             </LinearLayout>
             <!-- to show the network error message-->
             <LinearLayout
@@ -78,7 +82,8 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="50dp"
-                    android:src="@drawable/ic_portable_wifi_off_black" />
+                    android:src="@drawable/ic_portable_wifi_off_black"
+                    android:contentDescription="@string/connectionError" />
 
                 <TextView
                     android:id="@+id/textView"
@@ -87,7 +92,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="28dp"
-                    android:text="Connection error!!! "
+                    android:text="@string/connectionError"
                     android:textAlignment="center" />
 
                 <TextView
@@ -97,7 +102,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="28dp"
-                    android:text="Please check your internet connection."
+                    android:text="@string/internetConnection"
                     android:textAlignment="center" />
                 <Button
                     android:id="@+id/retryBtn"
@@ -107,9 +112,9 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="Retry"
+                    android:text="@string/retry"
                     android:layout_gravity="center"/>
-            </LinearLayout>€
+            </LinearLayout>
         </RelativeLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 

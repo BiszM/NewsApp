@@ -94,35 +94,46 @@ public class FirebaseConnection {
         oneTime = true;
         final boolean[] checkEmail = {true};
         final String[] userKey = {null};
+        final boolean[] matches = {false};
+
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
                     String getFbId = (String) dataSnapshot1.child("fbId").getValue();
-                    Log.i("check", "fb_id" + getFbId);
-                    if(oneTime) {
-                        if (checkEmail[0]) {
-                            if (getFbId == null) {
-                                Log.i("check", "fb id null: ");
-                                userKey[0] = userRef.push().getKey();
+                    Log.i("check", "fb_id " + getFbId+ " " +fbId);
+                    Log.i("check", "1: "+ oneTime);
+                    if (checkEmail[0]) {
+                        Log.i("check", "checking email");
+                        if (getFbId == null) {
+                            Log.i("check", "fb id null: ");
+                            userKey[0] = userRef.push().getKey();
+                            checkEmail[0] = false;
+                        } else {
+                            Log.i("check", "fb id not null: ");
+                            if (getFbId.equals(fbId)) {
+                                Log.i("check", "matches");
+                                userKey[0] = null;
                                 checkEmail[0] = false;
+                                matches[0] = true;
                             } else {
-                                if (getFbId.matches(fbId)) {
-                                    userKey[0] = null;
-                                    checkEmail[0] = false;
-                                } else {
+                                Log.i("check", "no match");
+                                if(!matches[0]) {
                                     userKey[0] = userRef.push().getKey();
                                 }
                             }
                         }
-
-                        if (!checkEmail[0]) {
-                            UserModel userModel = new UserModel(fbId, username, email, gender, image);
-                            userRef.child(userKey[0]).setValue(userModel);
-                        }
-                        oneTime = false;
                     }
+                    Log.i("check", "break");
                 }
+                if (checkEmail[0]) {
+                    Log.i("check", "email true");
+                    UserModel userModel = new UserModel(fbId, username, email, gender, image);
+                    userRef.child(userKey[0]).setValue(userModel);
+                }else {
+                    Log.i("check", "email false");
+                }
+
             }
 
             @Override
@@ -130,6 +141,7 @@ public class FirebaseConnection {
 
             }
         });
+
 
     }
 
@@ -141,7 +153,6 @@ public class FirebaseConnection {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
                     String getId = (String) dataSnapshot1.child("fbId").getValue();
-                    boolean saveStatus = true;
                     DataSnapshot newsPath = dataSnapshot1.child("saved_news");
                     if(newsPath.exists()) {
                         if(getId.matches(fbId)){
@@ -179,7 +190,6 @@ public class FirebaseConnection {
                         if(getId.matches(fbId)) {
                             if (oneTime) {
                                 String newKey = dataSnapshot1.getRef().child("saved").push().getKey();
-                                String userKey = dataSnapshot1.toString();
                                 NewsModel newsModel = new NewsModel(author, title, description,
                                         image, website, true, false);
                                 dataSnapshot1.getRef().child("saved_news").child(newKey).setValue(newsModel);
@@ -242,7 +252,6 @@ public class FirebaseConnection {
                         if(getId.matches(fbId)) {
                             if (oneTime) {
                                 String newKey = dataSnapshot1.getRef().child("bookmarked").push().getKey();
-                                String userKey = dataSnapshot1.toString();
                                 NewsModel newsModel = new NewsModel(author, title, description,
                                         image, website, false, true);
                                 dataSnapshot1.getRef().child("bookmarked_news")
@@ -262,7 +271,7 @@ public class FirebaseConnection {
 
     }
 
-    public void getBookmarkNews(){
+    public void getBookmarkNews(final String fbId){
         Log.i("check", "get bookmark function");
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -270,7 +279,11 @@ public class FirebaseConnection {
                 for(DataSnapshot userSnapshot: dataSnapshot.getChildren()){
                     DataSnapshot newsSnapshot = userSnapshot.child("bookmarked_news");
                     for(DataSnapshot dataSnapshot1: newsSnapshot.getChildren()) {
-                        getNews(dataSnapshot1, "bookmark");
+                        String getFbId = (String) userSnapshot.child("fbId").getValue();
+                        Log.i("hero", getFbId +" "+ fbId);
+                        if(getFbId.matches(fbId)) {
+                            getNews(dataSnapshot1, "bookmark");
+                        }
                     }
                 }
                 listener.onDataReceived(true);
@@ -288,14 +301,17 @@ public class FirebaseConnection {
         });
     }
 
-    public void getSaveNews(){
+    public void getSaveNews(final String fbId){
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot userSnapshot: dataSnapshot.getChildren()){
                     DataSnapshot newsSnapshot = userSnapshot.child("saved_news");
                     for(DataSnapshot dataSnapshot1: newsSnapshot.getChildren()) {
-                        getNews(dataSnapshot1, "save");
+                        String getFbId = (String) userSnapshot.child("fbId").getValue();
+                        if(getFbId.matches(fbId)) {
+                            getNews(dataSnapshot1, "save");
+                        }
                     }
                 }
                 listener.onDataReceived(true);

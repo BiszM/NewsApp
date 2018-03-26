@@ -46,4 +46,13 @@
     <string name="save">Save</string>
     <string name="bookmark">Bookmark</string>
     <string name="share">Share</string>
+    <string name="noSave">There are no saved news…</string>
+    <string name="noBookmark">There are no bookmarked news…</string>
+    <string name="internetConnection">Please check your internet connection.</string>
+    <string name="connectionError">Connection error!!!</string>
+    <string name="retry">Retry</string>
+    <string name="enableFeature">Login to enable this feature</string>
+    <string name="emptySaveNews">Currently there are no saved news</string>
+    <string name="emptyBookmarkNews">Currently there are no bookmarked news</string>
 </resources>
+

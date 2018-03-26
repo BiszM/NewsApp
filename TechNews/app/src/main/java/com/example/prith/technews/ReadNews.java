@@ -136,7 +136,7 @@ public class ReadNews extends AppCompatActivity {
             public boolean onTabSelected(int position, boolean wasSelected) {
                 // Do something cool here...
                 if(position == 0){
-                    ReadNews.this.finish();
+                    ReadNews.this.supportFinishAfterTransition();
                 }else if(position == 1){
                     Toast.makeText(ReadNews.this, "Bookmarked", Toast.LENGTH_SHORT).show();
                     firebaseConnection.bookmarkNews(fbId, author, title,
