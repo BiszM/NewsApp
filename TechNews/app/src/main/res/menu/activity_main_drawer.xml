@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:anroid="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/home_icon"
+            android:title="Home"
+            android:checked="true"/>
+        <item
+            android:id="@+id/nav_phone"
+            android:icon="@drawable/phone_icon"
+            android:title="Smartphones" />
+        <item
+            android:id="@+id/nav_laptop"
+            android:icon="@drawable/laptop_icon"
+            android:title="Laptops" />
+        <item
+            android:id="@+id/nav_car"
+            android:icon="@drawable/car_icon"
+            android:title="Cars" />
+        <item
+            android:id="@+id/nav_bike"
+            android:icon="@drawable/bike_icon"
+            android:title="Bikes" />
+        <item
+            android:id="@+id/nav_my_news"
+            android:icon="@drawable/news_icon"
+            android:title="Your News" />
+    </group>
+
+</menu>

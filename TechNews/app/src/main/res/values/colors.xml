@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#DB6162</color>
+    <color name="colorPrimaryDark">#b54a4a</color>
+    <color name="colorAccent">#EEEEEE</color>
+    <color name="signInNotificationColor">#132227</color>
+
+    <color name="back">#027381</color>
+    <color name="bookmark">#018393</color>
+    <color name="save">#0093a5</color>
+    <color name="share">#009aad</color>
+</resources>

@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">Tech News</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="logo">This is a logo of Tech News</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="retypePassword">Retype-Password</string>
+    <string name="signIn">Sign In</string>
+    <string name="signUp">Sign Up</string>
+    <string name="signUpHeader">Signup to Tech News</string>
+    <string name="signInHeader">Login to Tech News</string>
+    <string name="signUpGuide">Don\'t have an account yet?</string>
+    <string name="signInGuide">Already have an account?</string>
+    <string name="rememberMe">Remember Me</string>
+
+    <item name="visible" type="id" />
+    <item name="masked" type="id" />
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="category_saved">Saved</string>
+    <string name="category_bookmark">Saved</string>
+
+    <!--hints-->
+    <string name="title">Title</string>
+    <string name="desc">Description</string>
+    <string name="content_desc">News Image</string>
+    <string name="author_name">Author Name</string>
+    <string name="news_from">News From</string>
+    <string name="icon_desc">Icon</string>
+    <string name="welcome">Welcome To TechApp</string>
+
+    <!--facebook login-->
+    <string name="facebook_app_id">217678082143075</string>
+    <string name="fb_login_protocol_scheme">fb217678082143075</string>
+
+    <!-- bottom navigation attributes-->
+    <string name="back">Go Back</string>
+    <string name="save">Save</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="share">Share</string>
+</resources>
