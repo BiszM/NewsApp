@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.example.prith.technews.R;
 import com.example.prith.technews.adapter.TabLayoutAdapter;
@@ -35,6 +36,8 @@ public class MyNews extends Fragment {
         for (int i = 0; i < imageResId.length; i++) {
             tabLayout.getTabAt(i).setIcon(imageResId[i]);
         }
+
+
         return view;
     }
 }

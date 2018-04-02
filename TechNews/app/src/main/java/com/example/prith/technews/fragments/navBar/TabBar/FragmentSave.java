@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.prith.technews.FirebaseConnection;
 import com.example.prith.technews.Model.NewsModel;
@@ -39,6 +40,7 @@ public class FragmentSave extends Fragment implements SwipeRefreshLayout.OnRefre
     Button retryBtn;
     DatabaseReference databaseReference;
     TextView saveTextView;
+    String fbId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,9 +74,15 @@ public class FragmentSave extends Fragment implements SwipeRefreshLayout.OnRefre
                 getResources().getColor(android.R.color.holo_green_light),
                 getResources().getColor(android.R.color.holo_red_light));
         swipeRefreshLayout.setEnabled(false);
+        swipeRefreshLayout.setVisibility(View.GONE);
         // initializing firebase database path
         databaseReference = FirebaseDatabase.getInstance().getReference("news");
 
+        try {
+            fbId = Profile.getCurrentProfile().getId();
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
         // calling function which checks the network status
         // which gets news data according to the network connection
         getSavedNews();
@@ -91,18 +99,12 @@ public class FragmentSave extends Fragment implements SwipeRefreshLayout.OnRefre
 
     //creating a new model to get saved news and insert data into recycler view
     public void getSavedNews(){
-        String fbId = null;
-        try {
-            fbId = Profile.getCurrentProfile().getId();
-        }catch (NullPointerException e){
-            e.printStackTrace();
-        }
-        final List<NewsModel> checkModel = NewsModel.getSavedNews();
-
         if(fbId == null) {
+            Toast.makeText(getContext(), getString(R.string.enableFeature), Toast.LENGTH_SHORT).show();
             saveNewsLayout.setVisibility(View.VISIBLE);
             saveTextView.setText(getString(R.string.enableFeature));
         }else {
+            final List<NewsModel> checkModel = NewsModel.getSavedNews();
             if (checkModel.size() > 0) {
                 adapter = new MyAdapter(getContext(), checkModel);
                 Log.i("received Model", "" + checkModel.size());

@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,6 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
 
         //creating view to inflate / add in main view
         view = inflater.inflate(R.layout.fragment_home, container, false);
-
         // locating views
         bookmarkLayout = view.findViewById(R.id.bookmarkLayout);
         saveNewsLayout = view.findViewById(R.id.saveNewsLayout);
@@ -101,7 +101,6 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
         // getting the network and connectivity of the mobile data and wifi
         ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo= cm.getActiveNetworkInfo();
-
         if (networkInfo != null){
             connectionErrorLayout.setVisibility(View.GONE);
             if(isRetry){
@@ -115,7 +114,6 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
                 }else{
                     checkModel = NewsModel.getNewsDetails("home");
                     if(checkModel.size() > 0) {
-                        Toast.makeText(getContext(), "enough size ", Toast.LENGTH_SHORT).show();
                         adapter = new MyAdapter(getContext(), checkModel);
                         recyclerView.setAdapter(adapter);
                         if(progressBar!=null){
@@ -144,7 +142,7 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
             @Override
             public void onDataReceived(boolean flag) {
                 checkModel2 = NewsModel.getNewsDetails("home");
-                adapter = new MyAdapter(getActivity(), checkModel);
+                adapter = new MyAdapter(getActivity(), checkModel2);
                 recyclerView.setAdapter(adapter);
             }
         });

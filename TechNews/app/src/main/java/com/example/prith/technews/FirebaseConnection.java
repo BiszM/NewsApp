@@ -54,8 +54,11 @@ public class FirebaseConnection {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot homeSnapshot: dataSnapshot.getChildren()){
                     callToGetNews(homeSnapshot, getNewsType);
+                    Log.i("check", "data listening");
+
                 }
                 listener.onDataReceived(true);
+                Log.i("check", "data listened");
                 if(progressBar!=null){
                     progressBar.setVisibility(View.GONE);
                 }
@@ -71,6 +74,7 @@ public class FirebaseConnection {
     }
 
     private void callToGetNews(DataSnapshot dataSnapshot, String checkType){
+        Log.i("check", "data listening2");
         String author = (String) dataSnapshot.child("author").getValue();
         String description = (String) dataSnapshot.child("description").getValue();
         String image = (String) dataSnapshot.child("image").getValue();

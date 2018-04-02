@@ -80,7 +80,12 @@ public class FragmentBookmark extends Fragment implements SwipeRefreshLayout.OnR
 
         // initializing firebase database path
         databaseReference = FirebaseDatabase.getInstance().getReference("news");
-
+        try {
+            fbId = Profile.getCurrentProfile().getId();
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+        Log.i("check", "firebase data "+ fbId);
         // calling function which checks the network status
         // which gets news data according to the network connection
         checkNetworkStatus(false, false);
@@ -108,12 +113,7 @@ public class FragmentBookmark extends Fragment implements SwipeRefreshLayout.OnR
         // getting the network and connectivity of the mobile data and wifi
         ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo= cm.getActiveNetworkInfo();
-        try {
-            fbId = Profile.getCurrentProfile().getId();
-        }catch (NullPointerException e){
-            e.printStackTrace();
-        }
-        Log.i("check", "firebase data "+ fbId);
+
         if(fbId == null) {
             bookmarkLayout.setVisibility(View.VISIBLE);
             bookmarkTextView.setText(getString(R.string.enableFeature));
@@ -159,13 +159,8 @@ public class FragmentBookmark extends Fragment implements SwipeRefreshLayout.OnR
             @Override
             public void onDataReceived(boolean flag) {
                 List<NewsModel> checkType = NewsModel.getBookmarkedNews();
-//                if(checkType.size() == 0){
-//                    bookmarkLayout.setVisibility(View.VISIBLE);
-//                    bookmarkTextView.setText(getString(R.string.emptyBookmarkNews));
-//                }else {
                     adapter = new MyAdapter(getContext(), checkType);
                     recyclerView.setAdapter(adapter);
-//                }
             }
         });
     }

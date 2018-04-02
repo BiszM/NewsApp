@@ -109,12 +109,12 @@ def get_data_from_tech(url):
     author = ''
     soup = scrape(url)
     # locating the contents to scrape
-    content = soup.find("div", {"class", "article-entry"})
+    # content = soup.find("div", {"class", "article-entry"})
     title_content = soup.find('title')
     video_content = soup.find('div', {'class': 'vdb_player'})
-    img_content = content.find('img', {"class", ""})
-    desc_content = content.findAll('p')[:3]
-    find_author = soup.findAll('div', {'class': 'byline'});
+    img_content = soup.find('img', {"class": "article__featured-image"})
+    desc_content = soup.find('div', {'class': 'article-content'}).findAll('p')[:5]
+    find_author = soup.find('div', {'class': 'article__byline'}).find('a');
     # checking if the content is None or not
     if video_content != None:
         print("video content found")
@@ -122,9 +122,7 @@ def get_data_from_tech(url):
         # saving the data in list
         for content in desc_content:
             description = description + '\n' + content.text
-        for a in find_author:
-            if a.find("a") in a:
-                author = a.find("a").text
+        author = find_author.text
         title = title_content.text
         image = img_content["src"]
 
@@ -141,8 +139,8 @@ def get_data_from_autoweek(url):
     soup = scrape(url)
     # locating the contents to scrape
     title_content = soup.find("div", {"class": "story-header"}).find("h1")
-    img_content = soup.find('article', {"class", "story"}).find("img", {"class": "thumb"})
-    desc_content = soup.find('section', {"class": "main-body"}).findAll("p")[3:5]
+    img_content = soup.find('article', {"class": "story"}).find("img", {"class": "thumb"})
+    desc_content = soup.find('section', {"class": "main-body"}).findAll("p")[3:7]
     find_author = soup.find('div', {'class': 'author-feature'});
     # checking if the content is None or not
     if title_content != None and img_content != None and desc_content != None:
@@ -173,14 +171,14 @@ def get_data_from_techradar(url):
     description = ''
     author = ""
     soup = scrape(url)
-    content = soup.find("section", {"class", "content-wrapper"})
+    content = soup.find("section", {"class": "content-wrapper"})
     if content is None:
         print("content is none")
     else:
         # locating the contents to scrape
         title_content = soup.find('title')
         img_content = content.findAll('img')[:1]
-        desc_content = content.findAll("p")[:5]
+        desc_content = content.findAll("p")[:6]
         find_author = soup.find('span', {'itemprop': 'name'});
         
         # checking if the content is None or not
@@ -205,7 +203,7 @@ def get_data_from_rideapart(url):
     # locating the contents to scrape
     title_content = soup.find('title')
     img_content = soup.find('h1', {"class": "image-box"}).find("img")
-    desc_content = soup.find("div", {"class": "entry-content"}).findAll("p")[:3]
+    desc_content = soup.find("div", {"class": "entry-content"}).findAll("p")[:5]
     find_author = soup.find('a', {'rel': 'author'});
     # checking if the content is None or not
     if title_content != None and img_content != None and desc_content != None:
@@ -226,7 +224,7 @@ def get_data_from_verge(url):
     soup = scrape(url)
     title_content = soup.find('title')
     img_content = soup.find('span', {"class": "e-image__image"})
-    desc_content = soup.find("div", {"class": "c-entry-content"}).findAll("p")[:4]
+    desc_content = soup.find("div", {"class": "c-entry-content"}).findAll("p")[:5]
     find_author = soup.find('span', {'class': 'c-byline__item'}).find("a");
     # checking if the content is None or not
     if title_content != None and find_author != None and img_content != None and desc_content != None:

@@ -174,7 +174,6 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         }.startTracking();
-
     }
 
 
