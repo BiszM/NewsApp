@@ -68,6 +68,7 @@ def get_link(url):
         for data in from_auto:
             for data in data.findAll("a", href=True)[:1]:
                 link = "http://autoweek.com" + data["href"]
+                print("link: " +link)
                 get_data_from_autoweek(link)
 
     # getting links from autoweek
@@ -78,6 +79,7 @@ def get_link(url):
         for data in from_radar:
             for data in data.findAll("a", href=True):
                 link = data['href']
+                print("link: " +link)
                 get_data_from_techradar(link)
 
     # getting links from rideapart
@@ -88,7 +90,9 @@ def get_link(url):
         for data in from_radar:
             for data in data.findAll("a", href=True)[:1]:
                 link = "https://rideapart.com" + data['href']
+                print("link: " +link)
                 get_data_from_rideapart(link)
+
     elif "verge" in url:
         print("in theverge")
         soup = scrape(url)
@@ -97,7 +101,9 @@ def get_link(url):
         for data in from_verge:
             for data in data.findAll("a", href=True)[:1]:
                 link = data['href']
+                print("link: " +link)
                 get_data_from_verge(link)
+
     else:
         print("Wrong Input")
 
@@ -224,16 +230,16 @@ def get_data_from_verge(url):
     soup = scrape(url)
     title_content = soup.find('title')
     img_content = soup.find('span', {"class": "e-image__image"})
-    desc_content = soup.find("div", {"class": "c-entry-content"}).findAll("p")[:5]
-    find_author = soup.find('span', {'class': 'c-byline__item'}).find("a");
+    desc_content = soup.find("div", {"class": "c-entry-content"})
+    find_author = soup.find('span', {'class': 'c-byline__item'})
     # checking if the content is None or not
     if title_content != None and find_author != None and img_content != None and desc_content != None:
         # saving the data in list
-        for content in desc_content:
+        for content in desc_content.findAll("p")[:5]:
             description = description + '\n' + content.text
         title = title_content.text[:-12]
         image = img_content["data-original"]
-        author = "By " + find_author.text
+        author = "By " + find_author.find("a").text
         post_news(author, title, image, url, description,
             "false", "false", "home")
     # data to save

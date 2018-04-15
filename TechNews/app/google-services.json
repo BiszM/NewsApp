@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:867307470282:android:4283c859bd0d0c7c",
         "android_client_info": {
-          "package_name": "com.example.prith.myapplication"
+          "package_name": "com.news.prith.myapplication"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "867307470282-acok6qamncg3u4rc07pr2ic0ok2292am.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.prith.myapplication",
+            "package_name": "com.news.prith.myapplication",
             "certificate_hash": "a0bdfc01e6bb3172f104855ee1e907ad0bd300ce"
           }
         },
@@ -54,7 +54,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:867307470282:android:55dc1a51a4670499",
         "android_client_info": {
-          "package_name": "com.example.prith.technews"
+          "package_name": "com.news.prith.technews"
         }
       },
       "oauth_client": [
@@ -62,7 +62,7 @@
           "client_id": "867307470282-iqltsaar762ockpbscf5k4mh9hkkeh4l.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.prith.technews",
+            "package_name": "com.news.prith.technews",
             "certificate_hash": "a0bdfc01e6bb3172f104855ee1e907ad0bd300ce"
           }
         },

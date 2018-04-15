@@ -38,8 +38,8 @@
     <string name="welcome">Welcome To TechApp</string>
 
     <!--facebook login-->
-    <string name="facebook_app_id">217678082143075</string>
-    <string name="fb_login_protocol_scheme">fb217678082143075</string>
+    <string name="facebook_app_id">1638576146198194</string>
+    <string name="fb_login_protocol_scheme">fb1638576146198194</string>
 
     <!-- bottom navigation attributes-->
     <string name="back">Go Back</string>

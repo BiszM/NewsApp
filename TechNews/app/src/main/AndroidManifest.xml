@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.prith.technews">
+    package="com.news.prith.technews">
 
     <!-- Permissions that app needs to run completely-->
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -23,8 +23,8 @@
         <meta-data android:name="AA_DB_VERSION" android:value="1" />
         <meta-data
             android:name="AA_MODELS"
-            android:value="com.example.prith.technews.Model.NewsModel,
-            com.example.prith.technews.Model.UserModel" />
+            android:value="com.news.prith.technews.Model.NewsModel,
+            com.news.prith.technews.Model.UserModel" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
@@ -44,6 +44,7 @@
 
 
         <!--Android Login System-->
+
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
 
@@ -61,6 +62,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+
 
     </application>
 
