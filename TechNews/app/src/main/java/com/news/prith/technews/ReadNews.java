@@ -2,6 +2,7 @@ package com.news.prith.technews;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.facebook.Profile;
+import com.news.prith.technews.Model.NewsModel;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -134,18 +136,33 @@ public class ReadNews extends AppCompatActivity {
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {
-                // Do something cool here...
+                //back button
                 if(position == 0){
                     ReadNews.this.supportFinishAfterTransition();
-                }else if(position == 1){
+                }
+                //bookmark button
+                else if(position == 1){
+                    NewsModel.deleteBookmarkedNews();
                     Toast.makeText(ReadNews.this, "Bookmarked", Toast.LENGTH_SHORT).show();
                     firebaseConnection.bookmarkNews(fbId, author, title,
                             description, image, site);
-                }else if(position == 2){
+                }
+                //save button
+                else if(position == 2){
+                    NewsModel.deleteSavedNews();
                     Toast.makeText(ReadNews.this, "Saved", Toast.LENGTH_SHORT).show();
                     firebaseConnection.saveNews(fbId, author, title,
                     description, image, site);
-                }else if(position == 3){
+                }
+                //share button
+                else if(position == 3){
+                    Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "TechNews");
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, title+ "...  Download TechNews" +
+                                    " from playstore or open to read it more..."
+                            );
+                    startActivity(Intent.createChooser(shareIntent, "Share via"));
                 }else{
                 }
 

@@ -42,6 +42,7 @@ dependencies {
     implementation 'com.aurelhubert:ahbottomnavigation:2.1.0'
     implementation 'com.google.firebase:firebase-auth:12.0.1'
     implementation 'com.google.android.gms:play-services-auth:12.0.1'
+    implementation 'com.google.android.gms:play-services-ads:12.0.1'
 }
 
 

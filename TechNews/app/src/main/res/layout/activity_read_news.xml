@@ -63,6 +63,7 @@
                 android:fontFamily="@font/old_standard_tt"
                 android:lineSpacingExtra="5dp"
                 android:lineSpacingMultiplier="1.5"
+                android:layout_marginTop="20dp"
                 android:paddingBottom="10dp"
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"

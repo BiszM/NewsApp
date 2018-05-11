@@ -2,35 +2,37 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.news.prith.technews">
 
-    <!-- Permissions that app needs to run completely-->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Permissions that app needs to run completely -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <!-- <uses-permission android:name="android.permission.INTERNET"/> -->
-
     <application
+        android:name=".TechNewsApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".TechNewsApplication"
-        >
-        <!-- Defining the database connection attributes-->
-        <meta-data android:name="AA_DB_NAME" android:value="enews.db" />
-        <meta-data android:name="AA_DB_VERSION" android:value="1" />
+        android:theme="@style/AppTheme">
+
+        <!-- Defining the database connection attributes -->
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="enews.db" />
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="1" />
         <meta-data
             android:name="AA_MODELS"
-            android:value="com.news.prith.technews.Model.NewsModel,
-            com.news.prith.technews.Model.UserModel" />
+            android:value="com.news.prith.technews.Model.NewsModel,             com.news.prith.technews.Model.UserModel" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashScreen"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -39,31 +41,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ReadNews"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ReadNews"
+            android:screenOrientation="portrait" />
 
+        <!-- Android Login System -->
 
-        <!--Android Login System-->
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
-
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
-
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

@@ -10,6 +10,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +40,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.AdapterHolder> {
         this.newsList = newsList;
     }
 
-
     @NonNull
     @Override
     public AdapterHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -52,15 +52,32 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.AdapterHolder> {
     public void onBindViewHolder(@NonNull final AdapterHolder holder, int position) {
         final NewsModel model = newsList.get(position);
         // saving file to string
-        final String title = model.title;
-        final String desc = model.description;
+        final String title = model.title.trim();
+        final String desc = model.description.trim();
         final String image = model.image;
-        final String author = model.author;
-        final String site = model.website;
-
+        final String author = model.author.trim();
+        final String site = model.website.trim();
+        String siteAuthor = null;
         // setting the string variable to the textView of the holder
         holder.title.setText(title);
-        holder.author.setText(author);
+        if(author.equals("unknown") || author == null ||
+                author.contains("unknown") || author.isEmpty()){
+            if(site.contains("techcrunch")){
+                siteAuthor = "Techcrunch";
+            }else if(site.contains("techradar")){
+                siteAuthor = "Techradar";
+            }else if(site.contains("autoweek")){
+                siteAuthor = "Autoweek";
+            }else if(site.contains("rideapart")){
+                siteAuthor = "Rideapart";
+            }else if(site.contains("verge")){
+                siteAuthor = "The Verge";
+            }
+
+            holder.author.setText("From "+siteAuthor);
+        }else{
+            holder.author.setText(author);
+        }
         Picasso.with(context)
             .load(model.image)
             .resize(150,150)
@@ -106,6 +123,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.AdapterHolder> {
         ImageView imageView;
         TextView title, author;
         CardView cardView;
+        DisplayMetrics metrics = itemView.findViewById(R.id.titleArea).getResources().getDisplayMetrics();
+
+        int DeviceTotalWidth = metrics.widthPixels;
+        int DeviceTotalHeight = metrics.heightPixels;
 
         AdapterHolder(View itemView) {
             super(itemView);
@@ -113,6 +134,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.AdapterHolder> {
             imageView = itemView.findViewById(R.id.newsImgArea);
             title = itemView.findViewById(R.id.titleArea);
             author = itemView.findViewById(R.id.postedBy);
+            title.setTextSize(DeviceTotalHeight/53);
+            author.setTextSize(DeviceTotalHeight/62);
         }
     }
 
@@ -122,17 +145,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.AdapterHolder> {
         newsList.addAll(newList);
         notifyDataSetChanged();
 
-
-
         for(NewsModel news : newList){
-
             Log.v("checkingdata",news.title);
-
-
         }
-
-
-
     }
 }
 

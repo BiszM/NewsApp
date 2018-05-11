@@ -25,6 +25,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.news.prith.technews.Model.NewsModel;
 import com.news.prith.technews.fragments.navBar.FragmentBike;
 import com.news.prith.technews.fragments.navBar.FragmentCar;
@@ -54,7 +57,14 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+/*
 
+* @startuml
+* * MainActivity
+
+ * @enduml
+
+ */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener{
 
@@ -64,7 +74,7 @@ public class MainActivity extends AppCompatActivity
     private static String TAG = "MainActivity";
     private String onFragment;
     FragmentManager fragmentManager = getSupportFragmentManager();
-
+    private AdView bannerAdView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +84,12 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //google ad
+        MobileAds.initialize(this, "ca-app-pub-8776700146685966/8969473085");
+        bannerAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        bannerAdView.loadAd(adRequest);
 
         // Mapping hashkey
 //        try {

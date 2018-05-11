@@ -1,8 +1,3 @@
-#!/usr/bin/python3
-from flask import Flask, request, jsonify
-from flask_restful import Resource, Api
-from json import dumps
-
 # for web extraction
 from bs4 import BeautifulSoup
 import requests
@@ -45,7 +40,6 @@ def get_link(url):
     soup = scrape(url)
 
     # getting links from techcrunch
-    links = []
     if "techcrunch" in url:
         print("in techcrunch")
         # locating which part will be scrape 
@@ -120,7 +114,7 @@ def get_data_from_tech(url):
     video_content = soup.find('div', {'class': 'vdb_player'})
     img_content = soup.find('img', {"class": "article__featured-image"})
     desc_content = soup.find('div', {'class': 'article-content'}).findAll('p')[:5]
-    find_author = soup.find('div', {'class': 'article__byline'}).find('a');
+    find_author = soup.find('div', {'class': 'article__byline'}).find('a')
     # checking if the content is None or not
     if video_content != None:
         print("video content found")
@@ -147,7 +141,7 @@ def get_data_from_autoweek(url):
     title_content = soup.find("div", {"class": "story-header"}).find("h1")
     img_content = soup.find('article', {"class": "story"}).find("img", {"class": "thumb"})
     desc_content = soup.find('section', {"class": "main-body"}).findAll("p")[3:7]
-    find_author = soup.find('div', {'class': 'author-feature'});
+    find_author = soup.find('div', {'class': 'author-feature'})
     # checking if the content is None or not
     if title_content != None and img_content != None and desc_content != None:
         # saving the data in list
@@ -185,7 +179,7 @@ def get_data_from_techradar(url):
         title_content = soup.find('title')
         img_content = content.findAll('img')[:1]
         desc_content = content.findAll("p")[:6]
-        find_author = soup.find('span', {'itemprop': 'name'});
+        find_author = soup.find('span', {'itemprop': 'name'})
         
         # checking if the content is None or not
         if title_content != None and img_content != None and desc_content != None:
@@ -210,7 +204,7 @@ def get_data_from_rideapart(url):
     title_content = soup.find('title')
     img_content = soup.find('h1', {"class": "image-box"}).find("img")
     desc_content = soup.find("div", {"class": "entry-content"}).findAll("p")[:5]
-    find_author = soup.find('a', {'rel': 'author'});
+    find_author = soup.find('a', {'rel': 'author'})
     # checking if the content is None or not
     if title_content != None and img_content != None and desc_content != None:
         # saving the data in list
@@ -228,6 +222,7 @@ def get_data_from_rideapart(url):
 def get_data_from_verge(url):
     description = ''
     soup = scrape(url)
+        
     title_content = soup.find('title')
     img_content = soup.find('span', {"class": "e-image__image"})
     desc_content = soup.find("div", {"class": "c-entry-content"})
@@ -239,9 +234,13 @@ def get_data_from_verge(url):
             description = description + '\n' + content.text
         title = title_content.text[:-12]
         image = img_content["data-original"]
-        author = "By " + find_author.find("a").text
+        if find_author.find("a") is None:
+            author = "The Verge"
+        else:
+            author = "By " + find_author.find("a").text          
         post_news(author, title, image, url, description,
             "false", "false", "home")
+
     # data to save
     
 def post_news(author, title, image, website, description, bookmarked, save, newsType):
